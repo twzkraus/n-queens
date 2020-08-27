@@ -34,7 +34,7 @@ window.findNRooksSolution = function(n) {
         } else {
         // else
           // toggle back
-          board.togglePiece(i,j);
+          board.togglePiece(i, j);
         }
       }
     }
@@ -64,28 +64,30 @@ window.findNQueensSolution = function(n) {
     return [];
   }
   var validBoards = [];
+
   var findSolution = function(nextRowNumber, copyOfBoard) {
     if (copyOfBoard.hasAnyQueensConflicts()) {
       return;
     }
     if (nextRowNumber === n) {
-      validBoards.push(copyOfBoard);
-      return copyOfBoard;
+      validBoards.push(copyOfBoard.rows());
+      return;
     }
 
     for (var i = 0; i < n; i++) {
       var newBoard = new Board(copyOfBoard.rows());
       newBoard.togglePiece(nextRowNumber, i);
-      return findSolution(nextRowNumber + 1, newBoard);
+      findSolution(nextRowNumber + 1, newBoard);
       newBoard.togglePiece(nextRowNumber, i);
     }
   };
 
   var board = new Board({n: n});
+  findSolution(0, board);
   var solution = validBoards[0];
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution;
+  return solution || [];
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
@@ -100,7 +102,7 @@ window.countNQueensSolutions = function(n) {
       return;
     }
     if (nextRowNumber === n) {
-      validBoards.push(copyOfBoard);
+      validBoards.push(copyOfBoard.rows());
       return;
     }
 
@@ -114,7 +116,7 @@ window.countNQueensSolutions = function(n) {
 
   var board = new Board({n: n});
   findSolution(0, board);
-
+  console.log(validBoards);
   var solutionCount = validBoards.length; //fixme
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);

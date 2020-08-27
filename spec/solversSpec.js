@@ -45,6 +45,7 @@ describe('solvers', function() {
           }, 0);
         }, 0);
 
+        console.log(solutionBoard);
         expect(solutionBoard.get('n')).to.equal(n);
         expect(numPieces).to.equal(n);
         expect(solutionBoard.hasAnyQueensConflicts()).to.be.equal(false);
