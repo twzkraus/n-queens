@@ -170,6 +170,7 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      // time complexity: O(n). One loop over diagonals.
       if (this.rows().length === 0) {
         return false;
       }
@@ -203,6 +204,7 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      // time complexity: O(n^2). Two loops over diagonals.
       if (this.rows().length === 0) {
         return false;
       }
@@ -252,6 +254,7 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      // time complexity: O(n). One loop over diagonals.
       if (this.rows().length === 0) {
         return false;
       }
@@ -280,7 +283,7 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-
+      // time complexity: O(n^2). Two loops over diagonals.
       var length = this.rows().length;
       for (var i = 0; i < (length - 1) * 2; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {

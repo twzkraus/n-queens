@@ -16,7 +16,7 @@
 
 
 window.findNRooksSolution = function(n) {
-
+  // time complexity: O(n^3). Three loops over matrix.
   var board = new Board({'n': n});
   let piecesPlaced = 0;
   // while piecesPlaced < n
@@ -47,7 +47,7 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  // 2: 2, 3: 3 * f(2), 4: 4 * f(3)
+  // time complexity: O(n). One function call per n.
   let baseCases = [1, 1, 2];
   if (n < 3) {
     return baseCases[n];
@@ -60,23 +60,31 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
+  // time complexity: O(c^n). Number of branches/loops grows exponentially
   var validBoards = [];
 
   var findSolution = function(nextRowNumber, copyOfBoard) {
 
     if (nextRowNumber === n) {
-      var boardArray = JSON.stringify(copyOfBoard.rows());
-      boardArray = JSON.parse(boardArray);
-      var newBoard = new Board(boardArray);
-      validBoards.push(newBoard.rows());
-      return;
+      // var boardArray = JSON.stringify(copyOfBoard.rows());
+      // boardArray = JSON.parse(boardArray);
+      var boardArray = copyOfBoard.rows().map(function(row) {
+        return row.map((element) => {
+          return element;
+        });
+      });
+      validBoards.push(boardArray);
+      return true;
     }
 
     for (var i = 0; i < n; i++) {
       copyOfBoard.togglePiece(nextRowNumber, i);
       // optimization to avoid hasAnyQueensConflicts
       if (!copyOfBoard.hasAnyQueenConflictsOn(nextRowNumber, i)) {
-        findSolution(nextRowNumber + 1, copyOfBoard);
+        if(findSolution(nextRowNumber + 1, copyOfBoard)) {
+          return;
+        }
+
       }
       copyOfBoard.togglePiece(nextRowNumber, i);
     }
@@ -91,23 +99,22 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
+  // time complexity: O(c^n). Number of branches/loops grows exponentially
   if (n === 0) {
     return 1;
   }
-  var validBoards = [];
+  var solutionCount = 0;
 
   var findSolution = function(nextRowNumber, copyOfBoard) {
     if (nextRowNumber === n) {
-      var boardArray = JSON.stringify(copyOfBoard.rows());
-      boardArray = JSON.parse(boardArray);
-      var newBoard = new Board(boardArray);
-      validBoards.push(newBoard.rows());
+      // optimization to avoid saving each full solution:
+      solutionCount++;
       return;
     }
 
     for (var i = 0; i < n; i++) {
       copyOfBoard.togglePiece(nextRowNumber, i);
-      // optimization to avoid hasAnyQueensConflicts
+      // optimization to avoid hasAnyQueensConflicts:
       if (!copyOfBoard.hasAnyQueenConflictsOn(nextRowNumber, i)) {
         findSolution(nextRowNumber + 1, copyOfBoard);
       }
@@ -117,8 +124,6 @@ window.countNQueensSolutions = function(n) {
 
   var board = new Board({n: n});
   findSolution(0, board);
-  var solutionCount = validBoards.length; //fixme
-  console.log(validBoards);
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
