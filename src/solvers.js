@@ -16,8 +16,33 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
 
+  var board = new Board({'n': n});
+  let piecesPlaced = 0;
+  let rowNumber = 0;
+  let columnNumber = 0;
+  // while piecesPlaced < n
+  while (piecesPlaced < n) {
+    // loop over each row (first row to start)
+    for (let i = 0; i < n; i++) {
+      for (let j = i; j < n; j++) {
+        // toggle this position
+        board.toggle();
+        // if there is no conflict
+        if (true) {
+          // add one to each row and column
+          // piecesPlaced++
+        // else
+          // iterate to next position in same row
+          // toggle back
+        }
+      }
+    }
+
+    piecesPlaced++;
+  }
+
+  var solution = board.rows();
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
