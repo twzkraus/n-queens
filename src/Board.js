@@ -79,6 +79,7 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+    // time complexity: O(n). One loop over rows
       if (this.rows().length === 0) {
         return false;
       }
@@ -96,6 +97,7 @@
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+    // time complexity: O(n^2). Calls hasRowConflictAt n times.
       if (this.rows().length === 0) {
         return false;
       }
@@ -114,6 +116,7 @@
     // --------------------------------------------------------------
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      // time complexity: O(n). One loop over cols
       if (this.rows().length === 0) {
         return false;
       }
@@ -132,6 +135,7 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      // time complexity: O(n^2). Calls hasColConflictAt n times.
       if (this.rows().length === 0) {
         return false;
       }
