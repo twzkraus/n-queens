@@ -75,10 +75,11 @@ window.findNQueensSolution = function(n) {
     }
 
     for (var i = 0; i < n; i++) {
-      var newBoard = new Board(copyOfBoard.rows());
+      var boardArray = JSON.stringify(copyOfBoard.rows());
+      boardArray = JSON.parse(boardArray);
+      var newBoard = new Board(boardArray);
       newBoard.togglePiece(nextRowNumber, i);
       findSolution(nextRowNumber + 1, newBoard);
-      newBoard.togglePiece(nextRowNumber, i);
     }
   };
 
@@ -87,7 +88,7 @@ window.findNQueensSolution = function(n) {
   var solution = validBoards[0];
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution || [];
+  return solution || board.rows();
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
@@ -107,10 +108,11 @@ window.countNQueensSolutions = function(n) {
     }
 
     for (var i = 0; i < n; i++) {
-      var newBoard = new Board(copyOfBoard.rows());
+      var boardArray = JSON.stringify(copyOfBoard.rows());
+      boardArray = JSON.parse(boardArray);
+      var newBoard = new Board(boardArray);
       newBoard.togglePiece(nextRowNumber, i);
       findSolution(nextRowNumber + 1, newBoard);
-      newBoard.togglePiece(nextRowNumber, i);
     }
   };
 
