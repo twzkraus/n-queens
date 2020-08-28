@@ -81,7 +81,7 @@ window.findNQueensSolution = function(n) {
       copyOfBoard.togglePiece(nextRowNumber, i);
       // optimization to avoid hasAnyQueensConflicts
       if (!copyOfBoard.hasAnyQueenConflictsOn(nextRowNumber, i)) {
-        if(findSolution(nextRowNumber + 1, copyOfBoard)) {
+        if (findSolution(nextRowNumber + 1, copyOfBoard)) {
           return;
         }
 
